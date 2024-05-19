@@ -7,12 +7,12 @@ export interface ProductState{
     products:Product[]
 }
 
-export const productReducer=createReducer({showProductCode:true},
-    on(createAction('Toggle Product code'),state=>{
+export const productReducer=createReducer<ProductState>({showProductCode:true} as ProductState,
+    on(createAction('Toggle Product code'),(state):ProductState=>{
         console.log('original state'+JSON.stringify(state))
         return{
             ...state,
-            showProductCode:!state.showProductCode
-        }
+            showProductCode:!state.showProductCode,
+                }
     })
 )

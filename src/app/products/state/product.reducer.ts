@@ -1,5 +1,5 @@
-import { createAction, createReducer, on } from "@ngrx/store";
-import { Product } from "../product";
+import { createAction, createFeatureSelector, createReducer, createSelector, on } from "@ngrx/store";
+import { Product } from "../product";import { state } from "@angular/animations";
 
 export interface ProductState{
     showProductCode:boolean;
@@ -11,6 +11,11 @@ const initialState:ProductState={
     currentProduct: null as any , // Change type to Product | null
     products:[]
 }
+const getProductFeatureState=createFeatureSelector<ProductState>('products')
+export const getShowProductCode=createSelector(
+    getProductFeatureState,
+    state=>state.showProductCode
+)
 export const productReducer=createReducer<ProductState>(initialState,
     on(createAction('Toggle Product code'),(state):ProductState=>{
         console.log('original state'+JSON.stringify(state))

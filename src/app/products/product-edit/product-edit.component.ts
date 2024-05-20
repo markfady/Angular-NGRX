@@ -8,6 +8,7 @@ import * as ProductsActions from '../state/product.action'
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/state/app.state';
 import { getCurrentProduct } from '../state/product.reducer';
+import { Observable, tap } from 'rxjs';
 @Component({
   selector: 'pm-product-edit',
   templateUrl: './product-edit.component.html'
@@ -16,7 +17,8 @@ export class ProductEditComponent implements OnInit {
   pageTitle = 'Product Edit';
   errorMessage = '';
   productForm: FormGroup;
-  product: Product | null;
+  products$:Observable<Product>
+  product: Product ;
 
 
   // Use with the generic validation message class
@@ -57,9 +59,9 @@ export class ProductEditComponent implements OnInit {
     });
 
     // Watch for changes to the currently selected product
-    this.store.select(getCurrentProduct).subscribe(
+    this.products$=this.store.select(getCurrentProduct).pipe(tap(
       currentProduct => this.displayProduct(currentProduct)
-    );
+    ));
 
     // Watch for value changes for validation
     this.productForm.valueChanges.subscribe(
@@ -76,7 +78,7 @@ export class ProductEditComponent implements OnInit {
 
   displayProduct(product: Product | null): void {
     // Set the local product property
-    this.product = product;
+
 
     if (product) {
       // Reset the form back to pristine

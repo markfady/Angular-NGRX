@@ -11,11 +11,22 @@ const initialState:ProductState={
     currentProduct: null as any , // Change type to Product | null
     products:[]
 }
+/*Selectors */
 const getProductFeatureState=createFeatureSelector<ProductState>('products')
+
 export const getShowProductCode=createSelector(
     getProductFeatureState,
     state=>state.showProductCode
 )
+export const getCurrentProduct = createSelector(
+    getProductFeatureState,
+    state => state.currentProduct
+  );
+  
+  export const getProducts = createSelector(
+    getProductFeatureState,
+    state => state.products
+  );
 export const productReducer=createReducer<ProductState>(initialState,
     on(ProductsActions.toggleProductCode,(state):ProductState=>{
         console.log('original state'+JSON.stringify(state))

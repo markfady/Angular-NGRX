@@ -58,5 +58,11 @@ export const productReducer=createReducer<ProductState>(initialState,
                 starRating:0
             }
         }
+    }),
+    on(ProductsActions.loadProductsSuccess,(state,action):ProductState=>{ //Listen to effect action and set the retrieved data from action(effect) to the array of products
+        return{
+            ...state,
+            products:action.products
+        }
     })
 )

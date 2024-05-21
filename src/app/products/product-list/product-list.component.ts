@@ -24,7 +24,7 @@ export class ProductListComponent implements OnInit{
   products$:Observable<Product[]>;
   getShowProductCode$:Observable<boolean>
   // Used to highlight the selected product in the list
-  selectedProduct$: Observable<Product>
+  selectedProduct$: Observable<Product | null | undefined>;
 
   constructor(private productService: ProductService, private store:Store<State>) { }
 
@@ -47,7 +47,7 @@ export class ProductListComponent implements OnInit{
   }
 
   productSelected(product: Product): void {
-    this.store.dispatch(ProductActions.setCurrentProduct({product}))
+    this.store.dispatch(ProductActions.setCurrentProduct({currentProductId:product.id as number}))
   }
 
 }

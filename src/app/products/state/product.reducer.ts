@@ -18,14 +18,14 @@ export const getShowProductCode=createSelector(
     getProductFeatureState,
     state=>state.showProductCode
 )
-export const getcurrentProductId = createSelector(
-    getProductFeatureState,
-    state => state.currentProductId
-  );
+export const getCurrentProductId = createSelector(
+  getProductFeatureState,
+  state => state.currentProductId
+);
   
   export const getCurrentProduct = createSelector(
     getProductFeatureState,
-    getcurrentProductId,
+    getCurrentProductId,
     (state, currentProductId) => {
       if (currentProductId === 0) {
         return {
@@ -36,9 +36,8 @@ export const getcurrentProductId = createSelector(
           starRating: 0
         };
       } else {
-        return currentProductId != null
-          ? state.products.find(p => p.id === currentProductId)
-          : null;
+        console.log(currentProductId)
+        return currentProductId ? state.products.find(p => p.id === currentProductId) : null;
       }
     }
   );
@@ -71,7 +70,7 @@ export const productReducer=createReducer<ProductState>(initialState,
     on(ProductsActions.initializeCurrentProduct,(state):ProductState=>{
         return{
             ...state,
-            currentProductId:0
+            currentProductId:null
         }
     }),
     on(ProductsActions.loadProductsSuccess,(state,action):ProductState=>{ //Listen to effect action and set the retrieved data from action(effect) to the array of products
@@ -79,5 +78,16 @@ export const productReducer=createReducer<ProductState>(initialState,
             ...state,
             products:action.products
         }
+    }),
+    on(ProductsActions.updateProductSuccess, (state, action): ProductState => {
+        const updatedProducts = state.products.map(
+            item => action.product.id === item.id ? action.product : item
+        );
+        console.log(updatedProducts)
+        return {
+            ...state,
+            products: updatedProducts,
+            currentProductId: action.product.id
+        };
     })
 )

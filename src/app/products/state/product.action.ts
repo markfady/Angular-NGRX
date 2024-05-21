@@ -4,7 +4,7 @@ import { Product } from "../product";
 export const toggleProductCode=createAction('Toggle product code');
 
 export const setCurrentProduct=createAction('setCurrentProduct', //passing data to currentProduct
-    props<{product:Product}>()
+    props<{currentProductId:number}>()
 )
 
 export const clearCurrentProduct=createAction('Clear Current Product');

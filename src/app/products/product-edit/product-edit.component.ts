@@ -135,10 +135,7 @@ export class ProductEditComponent implements OnInit {
             error: err => this.errorMessage = err
           });
         } else {
-          this.productService.updateProduct(product).subscribe({
-            next: p =>this.store.dispatch(ProductsActions.setCurrentProduct({currentProductId:p.id as number})),
-            error: err => this.errorMessage = err
-          });
+         this.store.dispatch(ProductsActions.updateProduct({product}))
         }
       }
     }

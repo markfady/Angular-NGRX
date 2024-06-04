@@ -129,22 +129,11 @@ export class ProductEditComponent implements OnInit {
         // This ensures values not on the form, such as the Id, are retained
         const product = { ...originalProduct, ...this.productForm.value };
 
-        if (product.id === 0) {
-          this.productService.createProduct(product).subscribe({
-            next: p => this.store.dispatch(ProductsActions.setCurrentProduct({currentProductId:p.id as number})),
-            error: err => this.errorMessage = err
-          });
-        } else {
-          this.productService.updateProduct(product).subscribe({
-            next: p => this.store.dispatch(ProductsActions.setCurrentProduct({currentProductId:p.id as number})),
-            
-            error: err => this.errorMessage = err
-          });
           this.store.dispatch(ProductsActions.updateProduct({ product }));
-
-        }
       }
-    }
   }
-
 }
+  
+  
+}
+
